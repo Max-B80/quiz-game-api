@@ -2,7 +2,7 @@
   "name": "quiz-game-api",
   "version": "1.0.0",
   "description": "Backend REST API for a trivia quiz game",
-  "main": "index.js",
+  "main": "src/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
