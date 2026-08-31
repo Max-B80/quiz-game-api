@@ -3,7 +3,7 @@ import connectDB from "./config/db.js";
 import questionRoutes from "./routes/questionRoutes.js";
 
 const app = express();
-const PORT = Number(process.env.PORT) || 3000;
+const PORT = Number(process.env.PORT);
 
 // Parse incoming JSON requests
 app.use(express.json());
