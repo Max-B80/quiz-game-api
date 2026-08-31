@@ -1,8 +1,7 @@
 import mongoose from "mongoose";
 
 // A "Player" represents one quiz session/user.
-// Mongo generates a unique _id for us automatically, so we don't
-// need crypto.randomUUID() like in app.js anymore.
+// Mongo generates a unique _id for us automatically.
 const playerSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
