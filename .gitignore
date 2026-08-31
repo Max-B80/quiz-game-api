@@ -2,9 +2,12 @@
 .env
 
 # Dependencies 📦
-node_modules/
+node_modules
 
 # System files 💻
 .DS_Store
 
+
 package-lock.json
+
+
