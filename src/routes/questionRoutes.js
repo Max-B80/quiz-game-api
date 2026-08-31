@@ -3,7 +3,6 @@ import {
   getAllQuestions,
   createQuestion,
 } from "../controllers/questionController.js";
-import Question from "../models/Questions.js";
 
 const router = express.Router();
 
