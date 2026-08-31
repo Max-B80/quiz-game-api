@@ -1,15 +1,19 @@
 import express from "express";
 import connectDB from "./config/db.js";
 import questionRoutes from "./routes/questionRoutes.js";
+import quizRoutes from "./routes/quizRoutes.js";
 
 const app = express();
-const PORT = Number(process.env.PORT) || 3000;
+const PORT = Number(process.env.PORT);
 
 // Parse incoming JSON requests
 app.use(express.json());
 
-// Mount Question Routes
+// Mount Question Routes (CRUD for questions stored in MongoDB)
 app.use("/api/questions", questionRoutes);
+
+// Mount Quiz Routes (game logic: hardcoded questions + Mongo-backed players)
+app.use("/api/quiz", quizRoutes);
 
 // 🔍 404 Catch-All Handler (for invalid URLs)
 app.use((req, res) => {
