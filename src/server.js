@@ -1,31 +1,27 @@
 import express from "express";
 import connectDB from "./config/db.js";
-import questionRoutes from "./routes/questionRoutes.js";
 import quizRoutes from "./routes/quizRoutes.js";
-
+ 
 const app = express();
 const PORT = Number(process.env.PORT);
-
+ 
 // Parse incoming JSON requests
 app.use(express.json());
-
-// Mount Question Routes (CRUD for questions stored in MongoDB)
-app.use("/api/questions", questionRoutes);
-
+ 
 // Mount Quiz Routes (game logic: hardcoded questions + Mongo-backed players)
 app.use("/api/quiz", quizRoutes);
-
+ 
 // 🔍 404 Catch-All Handler (for invalid URLs)
 app.use((req, res) => {
   res.status(404).json({ success: false, message: "Route not found" });
 });
-
-// 🚀 Start server ONLY after MongoDB connects successfully
+ 
+// Start server ONLY after MongoDB connects successfully
 const startServer = async () => {
   try {
     await connectDB(process.env.MONGODB_URL);
     console.log("Connected to MongoDB Atlas! 🍃");
-
+ 
     app.listen(PORT, () => {
       console.log(`Server is running on http://localhost:${PORT} 🚀`);
     });
@@ -33,7 +29,7 @@ const startServer = async () => {
     console.error("Database connection error ❌:", error.message);
   }
 };
-
+ 
 startServer();
-
+ 
 export default app;

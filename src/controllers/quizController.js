@@ -37,7 +37,7 @@ export const startGame = async (req, res) => {
         .json({ message: "A player name is required to start" });
     }
 
-    const question = getRandomQuestion();
+    const question = getRandomQuestion(); // <--- UNDERNEATH THIS????????
 
     // Instead of an in-memory `sessions` object, we create a Player
     // document in MongoDB. Its _id doubles as the playerId.
@@ -70,6 +70,14 @@ export const submitAnswer = async (req, res) => {
     }
 
     const question = quizData.find((q) => q.id === player.currentQuestionId);
+
+    console.log("DEBUG →", {
+      currentQuestionId: player.currentQuestionId,
+      questionText: question?.question,
+      submittedAnswer,
+      expectedAnswer: question?.correctAnswer,
+    });
+
     const isCorrect = submittedAnswer === question.correctAnswer;
 
     if (isCorrect) {
