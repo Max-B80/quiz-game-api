@@ -21,7 +21,6 @@
   "homepage": "https://github.com/Max-B80/quiz-game-api#readme",
   "dependencies": {
     "express": "^5.2.1",
-    "mongo": "^0.1.0",
     "mongoose": "^9.9.4"
   }
 }
