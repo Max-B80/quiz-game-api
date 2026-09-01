@@ -1,12 +1,14 @@
 import express from "express";
 import connectDB from "./config/db.js";
 import quizRoutes from "./routes/quizRoutes.js";
+
  
 const app = express();
 const PORT = Number(process.env.PORT);
  
 // Parse incoming JSON requests
 app.use(express.json());
+
  
 // Mount Quiz Routes (game logic: hardcoded questions + Mongo-backed players)
 app.use("/api/quiz", quizRoutes);
