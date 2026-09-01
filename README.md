@@ -1,142 +1,135 @@
-## 🎮 Quiz Game API: How It Works & Our Plan
-
-Hey! Here is a complete breakdown of the Quiz Game API project we're building together, how it works behind the scenes, and our step-by-step roadmap from start to finish. 🚀
-
-## 🧠 What is a Quiz API?
-
-An API (Application Programming Interface) acts as the bridge between the backend (server & database) and the frontend (the user interface).
-
-Instead of showing visual buttons directly, our API receives requests (like "Give me 5 questions" or "Check if this answer is right"), processes the data, and sends back a response (usually in JSON format) 📦.
-
-## 🛠️ Our Tech Stack
-
-Node.js & Express 🟢: To build the server and route the requests.
-
-MongoDB & Mongoose 🍃: To store our questions, options, correct answers, and player scores.
-
-Postman 🟠: To test our API endpoints and make sure everything works before building any frontend.
-
-## 📋 How the Quiz Game Flows (Beginning to End)
-
-[ Player ] ➡️ Sends Request ➡️ [ Express Server ] ➡️ Queries ➡️ [ MongoDB ]
-│
-[ Player ] ⬅️ Receives JSON Response ⬅️ ┘
-
-#### 🗺️ Our Step-by-Step Building Plan
-
-\*\* Step 1: Setup & Database Connection ⚙️
-
-Set up the Express server and connect it to MongoDB using Mongoose.
-
-\*\* Step 2: Create the Question Model 🗂️
-
-Define what a "Question" looks like (question text, options array, correct answer index, category/difficulty).
-
-\*\* Step 3: Build CRUD Routes 🛣️
-
-GET /api/questions: Fetch questions for the quiz.
-
-POST /api/questions: Add new quiz questions to the database.
-
-POST /api/quiz/answer: Submit player answers and calculate the score.
-
-\*\* Step 4: Error Handling & Validation 🛡️
-
-Make sure missing fields or bad requests get clear error messages.
-
-\*\* Step 5: Testing with Postman 🧪
-
-Test every route together in Postman to confirm data flows correctly!
-
-Would you like to adjust any part of this plan or add specific features (like a timer ⏱️ or user authentication 🔐) before sending it over to her?
-
-===================================================
-
-# 🧠 Quiz Game API
-
-A RESTful backend API built with **Node.js**, **Express**, and **MongoDB Atlas** for managing a quiz game application.
-
----
-
-## 📋 Table of Contents
-
-- [Features](#-features)
-- [Tech Stack](#-tech-stack)
-- [Project Structure](#-project-structure)
-- [Prerequisites](#-prerequisites)
-- [Environment Variables](#-environment-variables)
-- [Installation & Setup](#-installation--setup)
-- [API Endpoints](#-api-endpoints)
-- [Error Handling](#-error-handling)
-
----
-
-## ✨ Features
-
-- ⚡ **Express Server**: Handles HTTP requests efficiently.
-- 🍃 **MongoDB Atlas Integration**: Connects securely to a cloud database using Mongoose.
-- 🔒 **Environment Security**: Sensitive keys and database URIs are kept safe using environment variables (`.env`).
-- 🛣️ **Modular Routing**: Clean separation between server configuration, database connections, and routes.
-
----
-
-## 🛠️ Tech Stack
-
-- **Runtime**: Node.js (v20+) 🟢
-- **Framework**: Express.js 🚂
-- **Database**: MongoDB Atlas 🍃
-- **ORM/ODM**: Mongoose 📦
-
----
-
-## 📁 Project Structure
-
-````text
+# Quiz Game API
+ 
+A backend REST API for a trivia quiz game, built with Node.js, Express, and MongoDB. Questions are hardcoded in the source code, while player sessions (name, score, current question) are persisted in MongoDB.
+ 
+## Tech Stack
+ 
+- **Node.js** + **Express** — server and routing
+- **MongoDB Atlas** + **Mongoose** — player data persistence
+- **dotenv** (via `--env-file`) — environment configuration
+## Project Structure
+ 
+```
 quiz-game-api/
+├── node_modules/
 ├── src/
 │   ├── config/
-│   │   └── db.js            # MongoDB connection logic
+│   │   └── db.js               # MongoDB connection setup
+│   ├── controllers/
+│   │   └── quizController.js   # Quiz game logic (questions, sessions, scoring)
+│   ├── data/
+│   │   └── quizData.js         # Hardcoded quiz questions
 │   ├── models/
-│   │   └── Question.js      # Mongoose schema for quiz questions
+│   │   └── Player.js           # Mongoose schema for a player/session
 │   ├── routes/
-│   │   └── questionRoutes.js# Route definitions for question endpoints
-│   └── server.js            # Main application entry point
-├── .env                     # Environment variables (not pushed to Git)
-├── package.json             # Project dependencies and scripts
-└── README.md                # Project documentation
-
-
-## 🔑 Environment Variables
-
-Create a `.env` file in the root directory and configure the following variables:
-
-```env
-PORT=3000
-MONGODB_URL=mongodb+srv://<username>:<password>@cluster0.sxeiqxa.mongodb.net/quiz-game?retryWrites=true&w=majority
-
-## 🚀 Installation & Setup
-git clone <repository-url>
-cd quiz-game-api
-
-## Install dependencies 📦
-npm install
-
-## Start the server ⚡
-node --env-file=.env src/server.js
-
-# 🛣️ API Endpoints
-
-### Questions Base URL: `/api/questions` ❓
-
-| Method | Endpoint | Description |
-| :--- | :--- | :--- |
-| **GET** | `/api/questions` | Fetch all quiz questions from the database 📥 |
-| **POST** | `/api/questions` | Create and save a new quiz question ➕ |
-
----
-
-## 🛡️ Error Handling
-
-- **404 Route Not Found**: Returns a clean JSON response if an invalid URL path is requested.
-- **Database Connection Error**: Prevents the Express server from starting up if MongoDB Atlas fails to authenticate or connect.
-````
+│   │   └── quizRoutes.js       # API route definitions
+│   └── server.js               # App entry point
+├── .env                        # Environment variables (not committed)
+├── .gitignore
+├── LICENSE
+├── package-lock.json
+├── package.json
+└── README.md
+```
+ 
+## Setup
+ 
+1. Clone the repository and install dependencies:
+```bash
+   npm install
+```
+ 
+2. Create a `.env` file in the project root with:
+```
+   PORT=3000
+   MONGODB_URL=<your MongoDB Atlas connection string>
+```
+ 
+3. Start the server:
+```bash
+   npm start
+```
+ 
+   You should see:
+```
+   Connected to MongoDB Atlas! 🍃
+   Server is running on http://localhost:3000 🚀
+```
+ 
+## How the Game Works
+ 
+1. A player starts a game and gets a random question, plus a unique `playerId`.
+2. The player submits an answer for their current question using that `playerId`.
+3. The server checks the answer, updates the player's score in MongoDB, and returns a new random question.
+4. Steps 2–3 repeat, reusing the same `playerId`, for as many rounds as the player wants to play.
+## API Endpoints
+ 
+### `GET /api/quiz/questions`
+Returns all quiz questions, with correct answers omitted.
+ 
+**Response:**
+```json
+[
+  {
+    "id": 1,
+    "question": "What is Node.js?",
+    "options": ["...", "...", "...", "..."]
+  }
+]
+```
+ 
+### `GET /api/quiz/questions/random`
+Returns a single random question, with the correct answer omitted.
+ 
+### `POST /api/quiz/start`
+Starts a new game session for a player. Creates a `Player` document in MongoDB.
+ 
+**Request body:**
+```json
+{
+  "name": "Alice"
+}
+```
+ 
+**Response:**
+```json
+{
+  "playerId": "66f1a2b3c4d5e6f7a8b9c0d1",
+  "question": {
+    "id": 4,
+    "question": "Which HTTP method is typically used to retrieve data from a server?",
+    "options": ["POST", "GET", "DELETE", "PUT"]
+  }
+}
+```
+ 
+### `POST /api/quiz/answer`
+Submits an answer for the player's current question. Updates the player's score in MongoDB and returns the next question.
+ 
+**Request body:**
+```json
+{
+  "playerId": "66f1a2b3c4d5e6f7a8b9c0d1",
+  "submittedAnswer": "GET"
+}
+```
+ 
+**Response:**
+```json
+{
+  "correct": true,
+  "score": 1,
+  "nextQuestion": {
+    "id": 7,
+    "question": "How do you start an Express server listening on port 3000?",
+    "options": ["app.listen(3000, () => {...})", "app.startServer(3000)", "server.run(3000)", "express.openPort(3000)"]
+  }
+}
+```
+ 
+## Notes
+ 
+- `quizData.js` is a hardcoded array and is never read from or written to the database — only player sessions are stored in MongoDB.
+- `submittedAnswer` must exactly match one of the strings in the current question's `options` array (copy it exactly; don't retype it by hand).
+- The same `playerId` should be reused across all `/api/quiz/answer` calls for a single game session.
+ 
