@@ -37,7 +37,7 @@ export const startGame = async (req, res) => {
         .json({ message: "A player name is required to start" });
     }
 
-    const question = getRandomQuestion(); // <--- UNDERNEATH THIS????????
+    const question = getRandomQuestion();
 
     // Instead of an in-memory `sessions` object, we create a Player
     // document in MongoDB. Its _id doubles as the playerId.
